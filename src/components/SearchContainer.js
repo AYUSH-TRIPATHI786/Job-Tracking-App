@@ -5,29 +5,42 @@ import { clearFilters, handleChange } from '../features/allJobs/allJobsSlice';
 import { useMemo, useState } from 'react';
 const SearchContainer = () => {
 	const [localSearch, setLocalSearch] = useState('');
-	const {  searchStatus, searchType, sort, sortOptions, isLoading } =
-		useSelector((store) => store.allJobs);
+	const { searchStatus, searchType, sort, sortOptions, isLoading } = useSelector(
+		(store) => store.allJobs
+	);
 	const { statusOptions, jobTypeOptions } = useSelector((store) => store.job);
 	const dispatch = useDispatch();
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(setLocalSearch(''))
+		dispatch(setLocalSearch(''));
 		dispatch(clearFilters());
 	};
 	const handleSearch = (e) => {
 		dispatch(handleChange({ name: e.target.name, value: e.target.value }));
 	};
-	const debounce = () => {
-		let timeoutId;
-		return (e) => {
-			setLocalSearch(e.target.value);
-			clearTimeout(timeoutId);
-			timeoutId = setTimeout(() => {
-				dispatch(handleChange({ name: e.target.name, value: e.target.value }));
-			}, 1000);
-		};
-	};
-	const optimizedDebounce = useMemo(() => debounce(), [debounce]);
+	// const debounce = () => {
+	// 	let timeoutId;
+	// 	return (e) => {
+	// 		setLocalSearch(e.target.value);
+	// 		clearTimeout(timeoutId);
+	// 		timeoutId = setTimeout(() => {
+	// 			dispatch(handleChange({ name: e.target.name, value: e.target.value }));
+	// 		}, 1000);
+	// 	};
+	// };
+	const optimizedDebounce = useMemo(
+		() => {
+			let timeoutId;
+			return (e) => {
+				setLocalSearch(e.target.value);
+				clearTimeout(timeoutId);
+				timeoutId = setTimeout(() => {
+					dispatch(handleChange({ name: e.target.name, value: e.target.value }));
+				}, 1000);
+			};
+		},
+		[dispatch]
+	);
 	return (
 		<Wrapper>
 			<form className="form">
