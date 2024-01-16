@@ -3,8 +3,6 @@ import Wrapper from '../assets/wrappers/SmallSidebar';
 import Logo from './Logo';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSidebar } from '../features/user/userSlice';
-import links from '../utils/links';
-import { NavLink } from 'react-router-dom';
 import NavLinks from './NavLinks';
 
 const SmallSidebar = () => {

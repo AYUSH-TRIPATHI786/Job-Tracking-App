@@ -10,7 +10,7 @@ const Stats = () => {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(getStats());
-	}, []);
+	}, [dispatch]);
 	if (isLoading) {
 		return <Loading />;
 	}

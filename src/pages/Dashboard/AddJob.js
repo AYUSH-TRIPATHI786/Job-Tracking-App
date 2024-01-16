@@ -63,7 +63,7 @@ const AddJob = () => {
 		if (!isEditing) {
 			dispatch(handleChange({ name: 'jobLocation', value: user.location }));
 		}
-	}, []);
+	}, [dispatch,isEditing,user.location]);
 	return (
 		<Wrapper>
 			<form onSubmit={handleSubmit}>
